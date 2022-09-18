@@ -1,7 +1,5 @@
 import view from "../UTILS/view.js";
 
-
-
 export default async function Home (path) {
 
     view.innerHTML = `

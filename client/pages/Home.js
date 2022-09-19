@@ -1,31 +1,25 @@
+import Featured from "../components/featured.js";
+import Popular from "../components/Popular.js";
 import view from "../UTILS/view.js";
 
-export default async function Home (path) {
+let count = 0;
+let featuredLength = 0;
 
+export default async function Home (path) {
+    const result = await getFeatured();
+    const featured = result.filter(game => game.featured === false);
+    featuredLength = featured.length;
+
+    path && timer()
+    
+    const popular = result.filter(game => game.rating === 5);
+    
     view.innerHTML = `
     <div class="container">
     <div class="main__content">
         <div class="showcase__content flex">
-            <div class="showcase__left flex center">
-                <div class="showcase__left__content flex">
-                    <div class="showcase__left__content__text">
-                        <p class="showcase__header__title"># Featured</p>
-                        <h1 class="showcase__text">Showcase a collection of new, upcoming and popular Game you are interested in.</h1>
-                    </div>
-                    <a href="" class="btn showcase__btn"> Add to collection</a>
-                </div>
-            </div>
-
-            <div class="showcase__rigth">
-                <p class="showcase__header__title">Popular Games</p>
-                <div class="showcase__rigth__content">
-                    <div class="content__item">
-                        <p>God of war</p>
-                        <p>action, advendture</p>
-                        <p>rating: 4 out 5</p>
-                    </div>
-                </div>
-            </div>
+            ${ Featured(featured, count)}
+            ${ Popular(popular) }
         </div>
 
         <div class="upcoming__content flex">
@@ -73,3 +67,27 @@ export default async function Home (path) {
 </div> 
     `
 };
+
+async function getFeatured(){
+    try {
+        const { data } = await axios.get(`http://127.0.0.1:8000/api/v1/games/static`);
+        return data.game
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+function timer (){
+    if(window.location.pathname === "/client/index.html"){
+        setInterval(()=> {
+            if(count === featuredLength -1 ){
+                    count = 0
+            }else{
+                count = count + 1
+                Home()
+            }
+        }, 3000)
+    }
+    
+}
+

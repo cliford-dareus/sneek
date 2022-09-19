@@ -5,18 +5,18 @@
 export default function Card (result, title){
     console.log(result)
     return `
-    <div class="collection__card">
-        ${ result.slice(0,4).map((card, index) => {
-            return `<div class="collection__card-item-${index}">
-                <img src=${card.imageURL} />
-            </div>`
-        }).join('')} 
-        <div class=collection__card__card-item-5>
-            <h3>${title}</h3>
-        </div>
-    </div>
-    `
-}
+    ${result.length > 0 ?
+        `<div class="collection__card">
+            ${ result.slice(0,4).map((card, index) => {
+                return `<div class="collection__card-item-${index}">
+                    <img src=${card.imageURL} />
+                </div>`
+            }).join('')} 
+            <div class=collection__card__card-item-5>
+                <h3>${title}</h3>
+            </div>
+        </div> ` : ''}`
+};
 
 
 

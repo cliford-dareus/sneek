@@ -5,7 +5,8 @@ import { isLogin } from './login.js';
 
 export default async function Collection (path){
     const result = await getGames();
-    const gameOfTheYear = result.filter(item => item._collection === 'gameoftheyear')
+    const gameOfTheYear = result.filter(item => item._collection === 'gameoftheyear');
+    const upcoming = result.filter(item => item._collection === 'upcoming');
 
     view.innerHTML = !isLogin? window.location.replace('#/login'):
     `<div class="container">
@@ -17,7 +18,7 @@ export default async function Collection (path){
             
             <div class="collection__card__container flex">
                 ${Card(gameOfTheYear, 'Game of The Year')}
-              
+                ${Card(upcoming, 'Game of The Year')}
             </div>
 
             <div class="collection__header">

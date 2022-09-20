@@ -9,8 +9,8 @@ export default async function Home (path) {
     const result = await getFeatured();
     const featured = result.filter(game => game.featured === false);
     featuredLength = featured.length;
-
-    path && timer()
+    
+    timer()
     
     const popular = result.filter(game => game.rating === 5);
     
